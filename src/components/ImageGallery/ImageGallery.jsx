@@ -1,7 +1,17 @@
-// export const ImageGallery = ({ items }) => (
-//   <ul className="gallery">
-//     {items.map(item => (
-//       <li key={item.id}>{item.image}</li>
-//     ))}
-//   </ul>
-// );
+import { ImageGalleryList } from './ImageGallery.styled';
+import { ImageGalleryItem } from './ImageGalleryItem';
+
+export const ImageGallery = ({ items, setImageModal, onClick }) => (
+  <ImageGalleryList>
+    {items.map(item => (
+      <ImageGalleryItem
+        key={item.id}
+        src={item}
+        onClick={() => {
+          setImageModal(item.largeImageURL);
+          onClick();
+        }}
+      />
+    ))}
+  </ImageGalleryList>
+);

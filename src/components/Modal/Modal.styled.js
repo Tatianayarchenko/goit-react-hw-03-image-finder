@@ -7,6 +7,10 @@ export const Backdrop = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+  /*  */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const ModalContent = styled.div`
@@ -14,7 +18,6 @@ export const ModalContent = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 600px;
-  height: 400px;
-  background-color: antiquewhite;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 24px);
 `;

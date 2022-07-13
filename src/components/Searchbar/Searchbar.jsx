@@ -43,8 +43,9 @@ const SearchSvg = styled(ImSearch)`
 `;
 
 export const Searchbar = ({ onSubmit }) => {
-  const handleSubmit = (values, { resetForm, setSubmitting }) => {
-    onSubmit(values).then(() => setSubmitting(false));
+  const handleSubmit = ({ searchQuery }, { resetForm }) => {
+    onSubmit(searchQuery);
+    console.log(searchQuery);
     resetForm();
   };
 
@@ -55,29 +56,20 @@ export const Searchbar = ({ onSubmit }) => {
         validationSchema={schema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting }) => (
-          <SearchForm className="form">
-            <SearchFormButton
-              type="submit"
-              className="button"
-              disabled={isSubmitting}
-            >
-              <SearchSvg />
-              {/* <SearchFormButtonLabel className="button-label">
-              Search
-            </SearchFormButtonLabel> */}
-            </SearchFormButton>
+        <SearchForm className="form">
+          <SearchFormButton type="submit" className="button">
+            <SearchSvg />
+          </SearchFormButton>
 
-            <Input
-              type="text"
-              autoComplete="off"
-              name="searchQuery"
-              autoFocus
-              placeholder="Search images and photos"
-            />
-            <ErrorMessage name="searchQuery" />
-          </SearchForm>
-        )}
+          <Input
+            type="text"
+            autoComplete="off"
+            name="searchQuery"
+            autoFocus
+            placeholder="Search images and photos"
+          />
+          <ErrorMessage name="searchQuery" />
+        </SearchForm>
       </Formik>
     </HeaderSearchbar>
   );
