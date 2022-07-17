@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { ImSearch } from 'react-icons/im';
@@ -45,7 +47,6 @@ const SearchSvg = styled(ImSearch)`
 export const Searchbar = ({ onSubmit }) => {
   const handleSubmit = ({ searchQuery }, { resetForm }) => {
     onSubmit(searchQuery);
-    console.log(searchQuery);
     resetForm();
   };
 
@@ -73,4 +74,8 @@ export const Searchbar = ({ onSubmit }) => {
       </Formik>
     </HeaderSearchbar>
   );
+};
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
 };
