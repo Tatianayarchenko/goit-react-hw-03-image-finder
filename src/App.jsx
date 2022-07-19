@@ -13,38 +13,15 @@ export class App extends Component {
     images: [],
     page: 1,
     isLoading: false,
-    showModal: false,
-    activeImg: '',
+    activeImg: null,
     error: false,
   };
 
   async componentDidUpdate(_, prevState) {
-    try {
-      if (
-        prevState.searchQuery !== this.state.searchQuery ||
-        prevState.page !== this.state.page
-      ) {
-        this.setState({ isLoading: true });
-        const data = await API.getImages(
-          this.state.searchQuery,
-          this.state.page
-        );
-        this.setState(prevState => ({
-          images: [...prevState.images, ...data.hits],
-          isLoading: false,
-        }));
-      }
-    } catch (error) {
-      this.setState({ error: true });
-      console.log(error);
+    if (prevState.page !== this.state.page && this.state.page !== 1) {
+      this.fetchImages(this.state.searchQuery, this.state.page);
     }
   }
-
-  toggleModal = () => {
-    this.setState(({ showModal }) => ({
-      showModal: !showModal,
-    }));
-  };
 
   setActiveImg = imageUrl => {
     this.setState({
@@ -52,12 +29,27 @@ export class App extends Component {
     });
   };
 
-  handleSubmit = searchQuery => {
+  fetchImages = async (searchQuery, page) => {
+    try {
+      this.setState({ isLoading: true });
+      const data = await API.getImages(searchQuery, page);
+      this.setState(prevState => ({
+        images: [...prevState.images, ...data.hits],
+        isLoading: false,
+      }));
+    } catch (error) {
+      this.setState({ error: true });
+      console.log(error);
+    }
+  };
+
+  handleSubmit = async searchQuery => {
     this.setState({
       searchQuery,
       images: [],
       page: 1,
     });
+    this.fetchImages(searchQuery, 1);
   };
 
   loadMore = () => {
@@ -83,8 +75,12 @@ export class App extends Component {
         )}
         {this.state.images.length > 0 && <Button onClick={this.loadMore} />}
 
-        {this.state.showModal && (
-          <Modal onClose={this.toggleModal}>
+        {this.state.activeImg && (
+          <Modal
+            onClose={() => {
+              this.setActiveImg(null);
+            }}
+          >
             <img src={this.state.activeImg} alt="" />
           </Modal>
         )}

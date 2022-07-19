@@ -21,5 +21,5 @@ export const ImageGallery = ({ items, setImageModal, onClick }) => (
 ImageGallery.propTypes = {
   items: PropTypes.array.isRequired,
   setImageModal: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
 };
