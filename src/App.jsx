@@ -7,7 +7,7 @@ import { Loading } from 'components/Loader';
 import { Modal } from 'components/Modal';
 import { Searchbar } from 'components/Searchbar';
 import { Component } from 'react';
-import * as API from './api/api';
+import * as API from './API/api';
 
 export class App extends Component {
   state = {
