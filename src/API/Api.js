@@ -18,5 +18,3 @@ export const getImages = async (searchQuery, page) => {
 
   return response.data;
 };
-
-// npm i react-toastify@5.2.1
