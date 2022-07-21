@@ -1,3 +1,5 @@
+// import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Container } from 'components/Container.styled';
 import { Button } from 'components/Button';
 import { ImageGallery } from 'components/ImageGallery';
@@ -5,7 +7,7 @@ import { Loading } from 'components/Loader';
 import { Modal } from 'components/Modal';
 import { Searchbar } from 'components/Searchbar';
 import { Component } from 'react';
-import * as API from './api/Api';
+import * as API from './api/api';
 
 export class App extends Component {
   state = {
@@ -37,6 +39,11 @@ export class App extends Component {
         images: [...prevState.images, ...data.hits],
         isLoading: false,
       }));
+      // if (data.totalHits === 0) {
+      //   return toast.error(
+      //     'Sorry, there are no images matching your search query. Please try again.'
+      //   );
+      // }
     } catch (error) {
       this.setState({ error: true });
       console.log(error);
@@ -84,6 +91,7 @@ export class App extends Component {
             <img src={this.state.activeImg} alt="" />
           </Modal>
         )}
+        {/* <ToastContainer /> */}
       </Container>
     );
   }
