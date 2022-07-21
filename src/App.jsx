@@ -7,7 +7,7 @@ import { Loading } from 'components/Loader';
 import { Modal } from 'components/Modal';
 import { Searchbar } from 'components/Searchbar';
 import { Component } from 'react';
-import * as API from './API/api';
+import * as API from './fetchImages/api';
 
 export class App extends Component {
   state = {
@@ -69,7 +69,6 @@ export class App extends Component {
     return (
       <Container>
         <Searchbar onSubmit={this.handleSubmit} />
-        {this.state.isLoading && <Loading />}
         {this.state.searchQuery && (
           <ImageGallery
             items={this.state.images}
@@ -77,11 +76,30 @@ export class App extends Component {
             setImageModal={this.setActiveImg}
           />
         )}
+        {/* {this.state.searchQuery && this.state.images.length >= 0 ? (
+          <ImageGallery
+            items={this.state.images}
+            onClick={this.toggleModal}
+            setImageModal={this.setActiveImg}
+          />
+        ) : (
+          <p>
+            Sorry, there are no images matching your search query. Please try
+            again.
+          </p>
+        )} */}
+
+        {this.state.isLoading && <Loading />}
         {this.state.error && (
           <p>Something went wrong, please try again or reload the page.</p>
         )}
         {this.state.images.length > 0 && <Button onClick={this.loadMore} />}
-
+        {/* {this.state.images.length <= 0 && (
+          <p>
+            Sorry, there are no images matching your search query. Please try
+            again.
+          </p>
+        )} */}
         {this.state.activeImg && (
           <Modal
             onClose={() => {
