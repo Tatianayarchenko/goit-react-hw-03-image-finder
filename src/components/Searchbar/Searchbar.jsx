@@ -1,62 +1,30 @@
 import PropTypes from 'prop-types';
-
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as yup from 'yup';
-import { ImSearch } from 'react-icons/im';
-import styled from 'styled-components';
-import { SearchFormButton, HeaderSearchbar } from './Searchbar.styled';
-
-let schema = yup.object().shape({
-  searchQuery: yup.string().required(),
-});
+import { Formik } from 'formik';
+import { toast } from 'react-toastify';
+import {
+  SearchFormButton,
+  HeaderSearchbar,
+  SearchForm,
+  Input,
+  SearchSvg,
+} from './Searchbar.styled';
 
 const initialValues = {
   searchQuery: '',
 };
 
-const SearchForm = styled(Form)`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  max-width: 600px;
-  background-color: #fff;
-  border-radius: 3px;
-  overflow: hidden;
-`;
-
-const Input = styled(Field)`
-  display: inline-block;
-  width: 100%;
-  font: inherit;
-  font-size: 20px;
-  border: none;
-  outline: none;
-  padding-left: 4px;
-  padding-right: 4px;
-  &::placeholder {
-    font: inherit;
-    font-size: 18px;
-  }
-`;
-
-const SearchSvg = styled(ImSearch)`
-  width: 20px;
-  height: 20px;
-`;
-
 export const Searchbar = ({ onSubmit }) => {
   const handleSubmit = ({ searchQuery }, { resetForm }) => {
+    if (searchQuery.trim() === '') {
+      return toast.error('Please, enter a request.');
+    }
     onSubmit(searchQuery);
     resetForm();
   };
 
   return (
     <HeaderSearchbar className="searchbar">
-      <Formik
-        initialValues={initialValues}
-        validationSchema={schema}
-        onSubmit={handleSubmit}
-      >
+      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         <SearchForm className="form">
           <SearchFormButton type="submit" className="button">
             <SearchSvg />
@@ -69,7 +37,6 @@ export const Searchbar = ({ onSubmit }) => {
             autoFocus
             placeholder="Search images and photos"
           />
-          <ErrorMessage name="searchQuery" />
         </SearchForm>
       </Formik>
     </HeaderSearchbar>
